@@ -3,9 +3,9 @@ import sqlite3
 
 ## from helloworld example 
 app = Flask(__name__)
+
 #for testing enter the dbpath
 dbPath = '/home/ma/my_bremen_osm_1.sqlite'
-
 
 #make connection to the given db
 def connect_db():
@@ -14,23 +14,24 @@ def connect_db():
 
 #show db-entry within the buffer of the given coords 
 # @param lat,lon int
+# @return db_entry str
 def show_db(lat, lon):
         
     #buffer coordinates
-    buffLat = lat
-    buffLon = lon
+    buff_lat = lat
+    buff_lon = lon
 
     print "lat: %s" %(lat)
     print "lon: %s" %(lon)
-    print "buffer lat: %s" %(buffLat)
-    print "buffer lon: %s" %(buffLon)
+    print "buffer lat: %s" %(buff_lat)
+    print "buffer lon: %s" %(buff_lon)
 
     cursr = g.db.cursor()
     #get the osm addresses from the test osm db
     #cursr.execute('''SELECT adress FROM my_osm_new_adresses ''')
     #print cursr.fetchall()
     cursr.execute(('''
-        SELECT * FROM my_osm_new_adresses as A
+        SELECT adress FROM my_osm_new_adresses as A
         WHERE Contains( 
             ST_Buffer(GeomFromText('POINT(%s %s)'), 200),
             A.geom
@@ -41,8 +42,12 @@ def show_db(lat, lon):
           WHERE f_table_name = 'my_osm_new_adresses' 
           AND search_frame = ST_Buffer(GeomFromText('POINT(%s %s)'), 200)
         )
-        ''') %(lat,lon,buffLat,buffLon))
-    print cursr.fetchall()
+        ''') %(lat,lon,buff_lat,buff_lon))
+    db_entries = cursr.fetchall()
+
+    #print db_entries
+
+    return db_entries
 
       
 
@@ -77,9 +82,9 @@ def geocode():
         return 'No coords are given'
 
     #make db call 
-    show_db(lat,lon)
+    entry = show_db(lat,lon)
 
     #give information about the coords
-    return 'Recived coordinates: lat: %i lon: %i' % (int(lat),int(lon));
+    return 'Recived coordinates: lat: %i lon: %i. Addres(ses) are:%s' % (int(lat),int(lon), entry);
     
     
