@@ -1,3 +1,4 @@
+ # -*- coding: utf-8 -*
 from flask import Flask, g, request
 import sqlite3  
 
@@ -5,11 +6,11 @@ import sqlite3
 app = Flask(__name__)
 
 #for testing enter the dbpath
-dbPath = '/home/ma/my_bremen_osm_1.sqlite'
+db_path = '/home/ma/my_bremen_osm_1.sqlite'
 
 #make connection to the given db
 def connect_db():
-    return sqlite3.connect(dbPath)
+    return sqlite3.connect(db_path)
 
 
 #show db-entry within the buffer of the given coords 
@@ -44,8 +45,6 @@ def show_db(lat, lon):
         )
         ''') %(lat,lon,buff_lat,buff_lon))
     db_entries = cursr.fetchall()
-
-    #print db_entries
 
     return db_entries
 
