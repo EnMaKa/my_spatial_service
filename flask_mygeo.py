@@ -12,13 +12,38 @@ def connect_db():
     return sqlite3.connect(dbPath)
 
 
-#show db with every entry in cmd
-def show_db():
-    print "fooo"
+#show db-entry within the buffer of the given coords 
+# @param lat,lon int
+def show_db(lat, lon):
+        
+    #buffer coordinates
+    buffLat = lat
+    buffLon = lon
+
+    print "lat: %s" %(lat)
+    print "lon: %s" %(lon)
+    print "buffer lat: %s" %(buffLat)
+    print "buffer lon: %s" %(buffLon)
+
     cursr = g.db.cursor()
     #get the osm addresses from the test osm db
-    cursr.execute('''SELECT adress FROM my_osm_new_adresses ''')
+    #cursr.execute('''SELECT adress FROM my_osm_new_adresses ''')
+    #print cursr.fetchall()
+    cursr.execute(('''
+        SELECT * FROM my_osm_new_adresses as A
+        WHERE Contains( 
+            ST_Buffer(GeomFromText('POINT(%s %s)'), 200),
+            A.geom
+            )
+        AND A.ROWID IN (
+          SELECT ROWID 
+          FROM SpatialIndex
+          WHERE f_table_name = 'my_osm_new_adresses' 
+          AND search_frame = ST_Buffer(GeomFromText('POINT(%s %s)'), 200)
+        )
+        ''') %(lat,lon,buffLat,buffLon))
     print cursr.fetchall()
+
       
 
 #before every request a connection to the db is set 
@@ -26,7 +51,7 @@ def show_db():
 def before_request():    
     g.db = connect_db()
     #load spatialite extension
-    g.db.execute("select load_extension('/usr/local/mod_spatialite.so')")
+    g.db.execute("select load_extension('/usr/local/lib/mod_spatialite')")
 
 
 #after the request the connection should be closed
@@ -52,8 +77,9 @@ def geocode():
         return 'No coords are given'
 
     #make db call 
-    show_db()
+    show_db(lat,lon)
 
-    return 'Recived coordinates: lat: %s lon: %d' % (int(lat),int(lon));
+    #give information about the coords
+    return 'Recived coordinates: lat: %i lon: %i' % (int(lat),int(lon));
     
     
