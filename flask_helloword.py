@@ -4,7 +4,7 @@ import sqlite3
 
 app = Flask(__name__)
 
-dbName = 'PATH TO SQLite DB'
+dbName = 'PATH TO SQLite DB with OSM addresses'
 
 
 def connect_db():
