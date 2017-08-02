@@ -16,6 +16,7 @@ def connect_db():
 def show_db():
     print "fooo"
     cursr = g.db.cursor()
+    #get the osm addresses from the test osm db
     cursr.execute('''SELECT adress FROM my_osm_new_adresses ''')
     print cursr.fetchall()
       
@@ -24,7 +25,8 @@ def show_db():
 @app.before_request
 def before_request():    
     g.db = connect_db()
-    g.db.execute("select load_extension('libspatialite-4.dll')")
+    #load spatialite extension
+    g.db.execute("select load_extension('/usr/local/mod_spatialite.so')")
 
 
 #after the request the connection should be closed
