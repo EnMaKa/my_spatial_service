@@ -1,26 +1,33 @@
 from flask import Flask, g, request
 import sqlite3  
 
-
+## from helloworld example 
 app = Flask(__name__)
+#for testing enter the dbpath
+dbPath = '/home/ma/my_bremen_osm_1.sqlite'
 
-dbName = 'PATH TO SQLite DB with OSM addresses'
 
-
+#make connection to the given db
 def connect_db():
-    return sqlite3.connect(dbName)
+    return sqlite3.connect(dbPath)
 
+
+#show db with every entry in cmd
 def show_db():
     print "fooo"
     cursr = g.db.cursor()
     cursr.execute('''SELECT adress FROM my_osm_new_adresses ''')
     print cursr.fetchall()
-   # return 'connected to database'    
+      
 
+#before every request a connection to the db is set 
 @app.before_request
-def before_request():
+def before_request():    
     g.db = connect_db()
+    g.db.execute("select load_extension('libspatialite-4.dll')")
 
+
+#after the request the connection should be closed
 @app.teardown_request
 def teardown_request(exception):
     if hasattr(g, 'db'):
@@ -30,44 +37,21 @@ def teardown_request(exception):
 def hello_world():
     return 'Hello, World! Nice to meet you!'
 
-@app.route('/testing')
-def testing():
-    return 'Testingpage. Nothing more.'
 
+#get the geocoordinates from url and make a db call 
 @app.route('/geocode')
 def geocode():   
-
+    #get lat/lon from url 
     lat = request.args.get('lat')
     lon = request.args.get('lon')
 
+    #check for lat/lon if there are no coords, then return without db connection 
     if not lat and not lon:
         return 'No coords are given'
 
+    #make db call 
     show_db()
 
     return 'Recived coordinates: lat: %s lon: %d' % (int(lat),int(lon));
     
     
-
-
-'''
-    dbName = 'my_bremen_osm_1.sqlite'
-    # Do connection to database 
-    dbConn = sqlite3.connect(dbName)
-
-    # Cursor needed for SQL-statements
-    cursr = dbConn.cursor()
-
-    # Do SQL-statement 
-    #cursr.execute("SELECT * FROM my_osm_new_adresses") 
-
-    print cursr.fetchall()
-
-    # Save (commit) the changes
-   # dbConn.commit()
-
-    # Close the connection
-    dbConn.close()
-
-'''
-
