@@ -54,7 +54,6 @@ def show_db(lat, lon):
 
     #convert to string
     return str(db_entries[0][0] +" "+db_entries[1][0])
-
       
 
 #before every request a connection to the db is set 
@@ -70,6 +69,7 @@ def before_request():
 def teardown_request(exception):
     if hasattr(g, 'db'):
         g.db.close()
+
 
 #return static html page
 @app.route('/')
@@ -93,5 +93,16 @@ def geocode():
 
     #give information about the coords
     return 'Recived coordinates: lat: %i lon: %i. Addres(ses) are:%s' % (int(lat),int(lon), entry);
-    
-    
+
+# do a adress search 
+@app.route('/locateStreet', methods=['POST'])
+def locate_street():
+    address_name = request.args.get('address')
+
+    address_form = request.form['address']
+   
+    print address_name
+    print address_form
+
+    return address_form or address_name
+
