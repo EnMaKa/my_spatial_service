@@ -1,6 +1,12 @@
- # -*- coding: utf-8 -*
+ # -*- coding: utf-8 -*-
 from flask import Flask, g, request
 import sqlite3  
+import sys
+
+#for system encoding 
+reload(sys)
+sys.setdefaultencoding('utf-8')
+
 
 ## from helloworld example 
 app = Flask(__name__)
@@ -34,19 +40,20 @@ def show_db(lat, lon):
     cursr.execute(('''
         SELECT adress FROM my_osm_new_adresses as A
         WHERE Contains( 
-            ST_Buffer(GeomFromText('POINT(%s %s)'), 200),
+            ST_Buffer(GeomFromText('POINT({0} {1})'), 200),
             A.geom
             )
         AND A.ROWID IN (
           SELECT ROWID 
           FROM SpatialIndex
           WHERE f_table_name = 'my_osm_new_adresses' 
-          AND search_frame = ST_Buffer(GeomFromText('POINT(%s %s)'), 200)
+          AND search_frame = ST_Buffer(GeomFromText('POINT({0} {1})'), 200)
         )
-        ''') %(lat,lon,buff_lat,buff_lon))
+        ''').format(lat, lon)) #%(lat,lon,buff_lat,buff_lon))
     db_entries = cursr.fetchall()
-
-    return db_entries
+    
+    #convert to string
+    return str(db_entries[0][0] +" "+db_entries[1][0])
 
       
 
