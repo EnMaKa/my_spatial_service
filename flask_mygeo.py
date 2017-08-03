@@ -105,15 +105,19 @@ def locate_street():
         print "##### POST METHOD IS CALLED #####"
         address_form = request.form['address']
         return address_form
+
+    elif request.method == 'GET':
+        print "##### GET METHOD IS CALLED #####"
+        address_form = request.form['address']
+        print address_form
+        return "GET WAS CALLED"
+
     else:
         print "##### URL #####"
         address_name = request.args.get('address')
         return address_name 
 
 '''
-    elif request.method == 'GET':
-        print "##### GET METHOD IS CALLED #####"
-        address_form = request.form['address']
-        return "GET WAS CALLED"
+    
 '''
     
