@@ -95,14 +95,21 @@ def geocode():
     return 'Recived coordinates: lat: %i lon: %i. Addres(ses) are:%s' % (int(lat),int(lon), entry);
 
 # do a adress search 
-@app.route('/locateStreet', methods=['POST'])
+@app.route('/locateStreet', methods=['GET','POST'])
 def locate_street():
-    address_name = request.args.get('address')
 
-    address_form = request.form['address']
-   
-    print address_name
-    print address_form
+    if request.method == 'POST':
+        print "##### POST METHOD IS CALLED #####"
+        address_form = request.form['address']
+        return address_form
 
-    return address_form or address_name
+    elif request.method == 'GET':
+        print "##### GET METHOD IS CALLED #####"
+        #address_form = request.form['address']
+        return "GET WAS CALLED"
+
+    else:
+        print "##### URL #####"
+        address_name = request.args.get('address')
+        return address_name 
 
