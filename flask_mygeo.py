@@ -1,5 +1,5 @@
  # -*- coding: utf-8 -*-
-from flask import Flask, g, request
+from flask import Flask, g, request, jsonify
 import sqlite3  
 import sys
 
@@ -54,7 +54,28 @@ def show_db(lat, lon):
 
     #convert to string
     return str(db_entries[0][0] +" "+db_entries[1][0])
-      
+   
+
+# show db address entries 
+def get_address(address_name):
+    print "Address called: %s" %(address_name)
+
+    cursr = g.db.cursor()
+
+    cursr.execute(('''
+        SELECT * FROM my_osm_new_adresses 
+        WHERE adress LIKE '%{0}%'
+        ''').format(address_name))
+
+    db_addresses = cursr.fetchall()
+
+    # TODO: transform GEOM into WKT
+    print db_addresses [0][2]
+    print db_addresses [1][2]
+
+    #convert to string
+    return str(db_addresses)
+
 
 #before every request a connection to the db is set 
 @app.before_request
@@ -95,11 +116,21 @@ def geocode():
     return 'Recived coordinates: lat: %i lon: %i. Addres(ses) are:%s' % (int(lat),int(lon), entry);
 
 # do a adress search 
-@app.route('/locatestreet', methods=['GET','POST'])
+@app.route('/locatestreet')
 def locate_street():
 
     print "#### function called ####"
 
+    address = request.args.get('address')
+
+    address_entry = get_address(address)
+
+    return address_entry 
+
+
+'''
+
+methods=['GET','POST']
     # check which type was called 
     if request.method == 'POST':
         print "##### POST METHOD IS CALLED #####"
@@ -113,11 +144,9 @@ def locate_street():
         return "GET WAS CALLED"
 
     else:
-        print "##### URL #####"
         address_name = request.args.get('address')
         return address_name 
+'''
 
-'''
-    
-'''
+   
     
