@@ -63,15 +63,15 @@ def get_address(address_name):
     cursr = g.db.cursor()
 
     cursr.execute(('''
-        SELECT * FROM my_osm_new_adresses 
+        SELECT node_id, adress, ST_X(geom), ST_Y(geom) FROM my_osm_new_adresses 
         WHERE adress LIKE '%{0}%'
         ''').format(address_name))
 
     db_addresses = cursr.fetchall()
 
-    # TODO: transform GEOM into WKT
+    # TODO: transform GEOM into X and Y Coords
     print db_addresses [0][2]
-    print db_addresses [1][2]
+    print db_addresses [0][3]
 
     #convert to string
     return str(db_addresses)
