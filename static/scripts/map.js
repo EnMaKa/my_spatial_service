@@ -1,5 +1,5 @@
 /**
- * Mapclick function that is listening if it is clicked and return the coords
+ * Mapclick function that is listening if it is clicked and open popup which return the coords
  */
 function onMapClick(e) {
 
@@ -9,6 +9,8 @@ function onMapClick(e) {
     var projCoords = L.Projection.SphericalMercator.project(e.latlng);
     console.log(projCoords.x);
     console.log(projCoords.y);  
+
+    // TODO: Transmit the coords via backend function to get adress information
 }
 
 /**
