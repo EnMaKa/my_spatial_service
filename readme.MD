@@ -17,3 +17,7 @@ For this project I used:
 - SQLite extension Spatialite (version 4.3.0a)
 - SQLIte extension Spatialite-tools (version 4.3.0)
 
+
+#### Get the project started
+
+Description how to set up the project on own system
