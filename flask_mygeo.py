@@ -56,7 +56,8 @@ def show_db(lat, lon):
     return str(db_entries[0][0] +" "+db_entries[1][0])
    
 
-# show db address entries 
+# show entries on db with address name 
+# @return adress string 
 def get_address(address_name):
     print "Address called: %s" %(address_name)
 
@@ -91,7 +92,7 @@ def teardown_request(exception):
     if hasattr(g, 'db'):
         g.db.close()
 
-
+# set root path and
 #return static html page
 @app.route('/')
 def root():
@@ -115,7 +116,8 @@ def geocode():
     #give information about the coords
     return 'Recived coordinates: lat: %i lon: %i. Addres(ses) are:%s' % (int(lat),int(lon), entry);
 
-# do a adress search 
+
+# do a adress search on db
 @app.route('/locatestreet')
 def locate_street():
 
