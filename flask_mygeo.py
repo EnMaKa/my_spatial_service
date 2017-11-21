@@ -116,8 +116,7 @@ def geocode():
     #give information about the coords
     return 'Recived coordinates: lat: %i lon: %i. Addres(ses) are:%s' % (int(lat),int(lon), entry);
 
-
-# do a adress search on db
+# API call to do a adress search based on adress name
 @app.route('/locatestreet')
 def locate_street():
 
