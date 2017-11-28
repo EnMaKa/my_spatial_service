@@ -20,18 +20,26 @@ def connect_db():
 
 
 #show db-entry within the buffer of the given coords 
-# @param lat,lon int
+# @param lat,lon, buffer_size int
 # @return db_entry str
-def show_db(lat, lon):
-        
+def show_db(lat, lon, buffer_size):
+
     #buffer coordinates
     buff_lat = lat
     buff_lon = lon
 
     print "lat: %s" %(lat)
     print "lon: %s" %(lon)
+    
     print "buffer lat: %s" %(buff_lat)
     print "buffer lon: %s" %(buff_lon)
+
+
+    # Check for non-empty buffer_size
+    if buffer_size == 0:
+        buffer_size = 200
+
+    print "buffer size: %s" %(buffer_size)
 
     cursr = g.db.cursor()
     #get the osm addresses from the test osm db
@@ -40,20 +48,20 @@ def show_db(lat, lon):
     cursr.execute(('''
         SELECT adress FROM my_osm_new_adresses as A
         WHERE Contains( 
-            ST_Buffer(GeomFromText('POINT({0} {1})'), 200),
+            ST_Buffer(GeomFromText('POINT({0} {1})'), {2}),
             A.geom
             )
         AND A.ROWID IN (
           SELECT ROWID 
           FROM SpatialIndex
           WHERE f_table_name = 'my_osm_new_adresses' 
-          AND search_frame = ST_Buffer(GeomFromText('POINT({0} {1})'), 200)
+          AND search_frame = ST_Buffer(GeomFromText('POINT({0} {1})'), {2})
         )
-        ''').format(lat, lon)) #%(lat,lon,buff_lat,buff_lon))
+        ''').format(lat, lon, buffer_size)) #%(lat,lon,buff_lat,buff_lon))
     db_entries = cursr.fetchall()
 
     #convert to string
-    return str(db_entries[0][0] +" "+db_entries[1][0])
+    return str(db_entries[0][0] + ", " +db_entries[1][0])
    
 
 # show entries on db with address name 
@@ -93,7 +101,7 @@ def teardown_request(exception):
         g.db.close()
 
 # set root path and
-#return static html page
+# return static html page
 @app.route('/')
 def root():
     return app.send_static_file('index.html')
@@ -101,26 +109,37 @@ def root():
 
 #get the geocoordinates from url and make a db call 
 @app.route('/geocode')
-def geocode():   
-    #get lat/lon from url 
+def geocode():
+   
+    #get info from url 
     lat = request.args.get('lat')
     lon = request.args.get('lon')
+    buffer_size=request.args.get('buffer_size')
 
     #check for lat/lon if there are no coords, then return without db connection 
     if not lat and not lon:
         return 'No coords are given'
 
+    # set default buffersize when no is given
+    if not buffer_size:#
+        buffer_size=200
+        #return buffer_size
+
     #make db call 
-    entry = show_db(lat,lon)
+    entry = show_db(lat,lon,buffer_size)
+
+    print entry
 
     #give information about the coords
-    return 'Recived coordinates: lat: %i lon: %i. Addres(ses) are:%s' % (int(lat),int(lon), entry);
+    ##return 'Recived coordinates: lat: %i lon: %i. Addres(ses) are:%s' % (int(lat),int(lon), entry);
+
+    return entry
 
 # API call to do a adress search based on adress name
 @app.route('/locatestreet')
 def locate_street():
 
-    print "#### function called ####"
+    print "#### function locatestreet is called ####"
 
     address = request.args.get('address')
 
