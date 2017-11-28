@@ -66,7 +66,7 @@
 
    <script>
         // backend search call function on button click
-      $('#searchbutton').click(function(){
+    $('#searchbutton').click(function(){
          
          var searchBarVal = $('#searchbar').val();
          console.log(searchBarVal);
@@ -76,9 +76,12 @@
             
             console.log("function called");
             console.log(result);
-            
-         });
-      });
+
+            debugger;
+            alert(result);
+
+        });
+  });
    </script>
 
    <div id="mapid"></div>
