@@ -3,7 +3,7 @@
  */
 function onMapClick(e) {
 
-    alert("You clicked the map at " + e.latlng);
+    //alert("You clicked the map at " + e.latlng);
 
     // Do a reprojection to EPSG:3857 for DB query
     var projCoords = L.Projection.SphericalMercator.project(e.latlng);
@@ -11,11 +11,11 @@ function onMapClick(e) {
     // Round Coords for backendcall 
     roundedCoordX = projCoords.x.toFixed(0);
     roundedCoordY = projCoords.y.toFixed(0);
-    
+    requestBuffer = 50;
 
     // TODO: make a a popup pin or something
     // GET-Request for information about the clicked location
-    $.get('/geocode?lat='+roundedCoordX +'&lon='+roundedCoordY, function(geoResult){
+    $.get('/geocode?lat='+roundedCoordX +'&lon='+roundedCoordY +'&buffer_size='+requestBuffer, function(geoResult){
         alert(geoResult);
     });
 
