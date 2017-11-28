@@ -69,15 +69,13 @@
     $('#searchbutton').click(function(){
          
          var searchBarVal = $('#searchbar').val();
-         console.log(searchBarVal);
-
+         
          // GET-Request 
          $.get('/locatestreet?address='+searchBarVal, function(result){
             
             console.log("function called");
             console.log(result);
 
-            debugger;
             alert(result);
 
         });
