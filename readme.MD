@@ -25,7 +25,13 @@ Description how to set up the project on own system.
 ##### Data
 Like I said, the used data for this geocoder example is ready to download at [Geofabrik](http://www.geofabrik.de). There I used the OSM database file for Bremen (bremen-latest.osm.pdf).
 
-For a reverse geocoder it is necessary to connect the node information with the adresses that belongs to the node.id with their geometry. Therefore I used some SQL-Statements that you will find in the same folder. 
+For a reverse geocoder it is necessary to connect the node information with the adresses that belongs to the node.id with their geometry. Therefore I used some SQL-Statements that you will find in the same folder.
+
+1. Create table with node.id, address and  then add geometry column
+2. Create another table with the merged node informations from other tabels
+3. Transfer information info first table
+4. Create spatial index for faster search results
+
 
 ##### Flask
 For this project I used Flask as backend service. For those never worked with Flask - it is written in python and in my opion pretty easy as node.js to start with. 
@@ -36,8 +42,9 @@ When the server runs, you can make two different calls to get informations from 
 ##### 1. Get coordination based information
 The first call makes an request to the spatialite DB to get the address name and number based on coordinations.
 
-Example: http://127.0.0.1:5000/geocode?lat=981325&lon=6997858 
+1. Example: http://127.0.0.1:5000/geocode?lat=981325&lon=6997858 
 
+2. Exmaple: http://127.0.0.1:5000/geocode?lat=981325&lon=6997858&buffer_size=150
 
 ##### 2. Get Adresses based information
 The second call will look at the informations that are given with a certain streetname.
