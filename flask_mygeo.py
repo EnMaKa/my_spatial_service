@@ -24,16 +24,10 @@ def connect_db():
 # @return db_entry str
 def show_db(lat, lon, buffer_size):
 
-    #buffer coordinates
-    buff_lat = lat
-    buff_lon = lon
-
+    #given coordinates
     print "lat: %s" %(lat)
     print "lon: %s" %(lon)
     
-    print "buffer lat: %s" %(buff_lat)
-    print "buffer lon: %s" %(buff_lon)
-
 
     # Check for non-empty buffer_size
     if buffer_size == 0:
@@ -57,7 +51,7 @@ def show_db(lat, lon, buffer_size):
           WHERE f_table_name = 'my_osm_new_adresses' 
           AND search_frame = ST_Buffer(GeomFromText('POINT({0} {1})'), {2})
         )
-        ''').format(lat, lon, buffer_size)) #%(lat,lon,buff_lat,buff_lon))
+        ''').format(lat, lon, buffer_size)) 
     db_entries = cursr.fetchall()
 
     #convert to string
@@ -110,7 +104,7 @@ def root():
 #get the geocoordinates from url and make a db call 
 @app.route('/geocode')
 def geocode():
-   
+
     #get info from url 
     lat = request.args.get('lat')
     lon = request.args.get('lon')
