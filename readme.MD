@@ -11,7 +11,7 @@ To be able to use a reverse geocoder, it was necessary to select the node inform
 
 For this project I used: 
 
-- Flak (version 0.12.2)
+- Flask (version 0.12.2)
 - Leaflet 
 - SQLite (version 3.9.2)
 - SQLite extension Spatialite (version 4.3.0a)
@@ -22,7 +22,7 @@ For this project I used:
 
 Description how to set up the project on own system.
 
-##### Data
+#### Data
 Like I said, the used data for this geocoder example is ready to download at [Geofabrik](http://www.geofabrik.de). There I used the OSM database file for Bremen (bremen-latest.osm.pdf).
 
 For a reverse geocoder it is necessary to connect the node information with the adresses that belongs to the node.id with their geometry. Therefore I used some SQL-Statements that you will find in the same folder.
@@ -32,9 +32,15 @@ For a reverse geocoder it is necessary to connect the node information with the 
 3. Transfer information info first table
 4. Create spatial index for faster search results
 
-
-##### Flask
+#### Flask
 For this project I used Flask as backend service. For those never worked with Flask - it is written in python and in my opion pretty easy as node.js to start with. 
+
+The flask backend will provide information about coordinates and streetnames. 
+
+Extesions used:
+g, request, jsonify
+sqlite3  
+sys
 
 #### Make an API-Call
 When the server runs, you can make two different calls to get informations from the database.
