@@ -27,7 +27,8 @@ Like I said, the used data for this geocoder example is ready to download at [Ge
 
 For a reverse geocoder it is necessary to connect the node information with the adresses that belongs to the node.id with their geometry. Therefore I used some SQL-Statements that you will find in the same folder. 
 
-
+##### Flask
+For this project I used Flask as backend service. For those never worked with Flask - it is written in python and in my opion pretty easy as node.js to start with. 
 
 #### Make an API-Call
 When the server runs, you can make two different calls to get informations from the database.
