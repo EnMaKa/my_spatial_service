@@ -1,0 +1,11 @@
+wget http://www.gaia-gis.it/gaia-sins/readosm-1.0.0e.tar.gz
+
+tar -xvzf readosm-1.0.0e.tar.gz 
+
+cd readosm-1.0.0e/
+
+./configure
+
+make -j8
+
+sudo make install-strip

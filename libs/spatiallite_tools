@@ -1,0 +1,11 @@
+wget http://www.gaia-gis.it/gaia-sins/spatialite-tools-sources/spatialite-tools-4.3.0.tar.gz
+
+tar -xvzf spatialite-tools-4.3.0.tar.gz 
+
+cd spatialite-tools-4.3.0/ 
+
+./configure
+
+make -j8 
+
+sudo make install-strip

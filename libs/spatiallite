@@ -1,0 +1,10 @@
+wget http://www.gaia-gis.it/gaia-sins/libspatialite-sources/libspatialite-4.3.0a.tar.gz
+
+tar -xvzf libspatialite-4.3.0a.tar.gz 
+
+cd libspatialite-4.3.0a/ 
+
+./configure --with-geosconfig=/usr/bin/geos-config 
+make -j8 
+
+sudo make install-strip
