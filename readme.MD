@@ -22,6 +22,10 @@ For this project I used:
 
 Description how to set up the project on own system.
 
+#### Install Frameworks
+
+For this project I used the frameworks listed above and with some skripts they'll install very easy just look [here](https://github.com/EnMaKa/my_spatial_service/tree/master/libs).
+
 #### Data
 Like I said, the used data for this geocoder example is ready to download at [Geofabrik](http://www.geofabrik.de). There I used the OSM database file for Bremen (bremen-latest.osm.pdf).
 
@@ -38,9 +42,11 @@ For this project I used Flask as backend service. For those never worked with Fl
 The flask backend will provide information about coordinates and streetnames. 
 
 Extesions used:
-g, request, jsonify
-sqlite3  
-sys
+- g 
+- request 
+- jsonify
+- sqlite3 
+- sys
 
 #### Make an API-Call
 When the server runs, you can make two different calls to get informations from the database.
@@ -56,4 +62,12 @@ The first call makes an request to the spatialite DB to get the address name and
 The second call will look at the informations that are given with a certain streetname.
 
 Example: http://127.0.0.1:5000/locatestreet?address=Brüggeweg
+
+
+#### Known Issues
+In this example there are some "bugs" that might be related to the database. 
+One known issue is that, if you click on the map and try to get the location you might not get the informatio that you thought you'll get. 
+
+The OSM node informations could not be called like they should. You get an address near to the lokation you've clicked, but not the right. 
+
 
