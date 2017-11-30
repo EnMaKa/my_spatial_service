@@ -38,7 +38,7 @@
          #searchbar{
             width: 350px;
             padding-right: 0px;
-            margin-right: -68px;
+            margin-right: -65px;
             border-radius: 3px;
             height: 30px;
             border-color: transparent !important;
@@ -50,38 +50,19 @@
             background-color: #f6e52b;
             /**border-radius: 6px;*/
             border: none !important;
-            margin-right: 0px;
+            margin-right: -1px;
             padding-bottom: 2px;
             padding-top: 2px;
          }
 
       </style>
    </head>
-   <body onload="loadMap()">
+   <body onload="loadMapAndFunctions()">
     
    <div id="searchbox">
       <input id="searchbar" type="search" name="address">
       <input id="searchbutton" type="button" value="search">
    </div>
-
-   <script>
-        // backend search call function on button click
-    $('#searchbutton').click(function(){
-         
-         var searchBarVal = $('#searchbar').val();
-         
-         // GET-Request 
-         $.get('/locatestreet?address='+searchBarVal, function(result){
-            
-            console.log("function called");
-            console.log(result);
-
-            alert(result);
-
-        });
-  });
-   </script>
-
    <div id="mapid"></div>
    </body>
 </html> 
