@@ -1,7 +1,7 @@
 /**
  * Load map function creates a leaflet map with an osm-baselayer.
  */
-function loadMap(){
+function loadMapAndFunctions(){
 
     var myMap = L.map('mapid');
     myMap.setView([53.08, 8.80692], 13);
@@ -37,6 +37,20 @@ function loadMap(){
         });
 
     }    
+
+    // backend search call function on button click
+    $('#searchbutton').click(function(){
+
+        var searchBar =$('#searchbar');
+        var searchBarVal = searchBar.val();
+        
+        // GET-Request 
+        $.get('/locatestreet?address='+searchBarVal, function(result){
+            alert(result);
+        });
+
+        searchBar.empty();
+    });
 
     myMap.on('click', onMapClick);
 }
