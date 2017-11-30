@@ -66,24 +66,29 @@ def get_address(address_name):
     cursr = g.db.cursor()
 
     cursr.execute(('''
-        SELECT node_id, adress, ST_X(geom), ST_Y(geom) FROM my_osm_new_adresses 
+        SELECT adress, ST_X(geom), ST_Y(geom) FROM my_osm_new_adresses 
         WHERE adress LIKE '%{0}%'
         ''').format(address_name))
 
     db_addresses = cursr.fetchall()
 
     # TODO: transform GEOM into X and Y Coords
+    print db_addresses [0][1]
     print db_addresses [0][2]
-    print db_addresses [0][3]
+    print db_addresses [0][0]
+    print db_addresses [1][0]
+
+
+
 
     #convert to string
-    return str(db_addresses)
+    return str(str(db_addresses [0][0]) +" is located at Postiton: " + str(db_addresses [0][1]) + "," + str(db_addresses [0][2]))
 
 
 #before every request a connection to the db is set 
 @app.before_request
 def before_request():    
-    g.db = connect_db()
+    g.db = connect_db() 
     #load spatialite extension
     g.db.execute("select load_extension('/usr/local/lib/mod_spatialite')")
 
