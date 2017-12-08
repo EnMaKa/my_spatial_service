@@ -16,6 +16,7 @@ For this project I used:
 - SQLite (version 3.9.2)
 - SQLite extension Spatialite (version 4.3.0a)
 - SQLIte extension Spatialite-tools (version 4.3.0)
+- ReasOSM (version 1.0.0)
 
 
 ### Get the project started
@@ -24,9 +25,25 @@ Description how to set up the project on own system.
 
 #### Install Frameworks
 
-For this project I used the frameworks listed above and with some skripts they'll install very easy just look [here](https://github.com/EnMaKa/my_spatial_service/tree/master/libs). 
+For this project I used the frameworks listed above and with some scripts they'll install very easy just look [here](https://github.com/EnMaKa/my_spatial_service/tree/master/libs). 
 
-The tools have some install scripts which you can use or you just download and install the packages via pip or something else.
+You just to have install them by cmd e.g `sudo ./NameOfScript`
+or step by step:
+##### Example: freexl
+`wget http://www.gaia-gis.it/gaia-sins/freexl-sources/freexl-1.0.2.tar.gz
+
+tar -xvzf freexl-1.0.2.tar.gz 
+
+cd freexl-1.0.2/
+
+./configure 
+
+make -j8 
+
+sudo make install-strip`
+
+
+The tools have some install scripts which you can use or you just download and install the packages via pip or something else. If the scripts should not work, the you can simple copy the cmd info and paste it into your cmd.
 
 #### Data
 Like I said, the used data for this geocoder example is ready to download at [Geofabrik](http://www.geofabrik.de). There I used the OSM database file for Bremen (bremen-latest.osm.pdf).
