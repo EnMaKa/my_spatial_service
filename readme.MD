@@ -29,16 +29,16 @@ For this project I used the frameworks listed above and with some scripts they'l
 
 You just to have install them by cmd e.g `sudo ./NameOfScript`
 or step by step:
-##### Example: freexl
-`wget http://www.gaia-gis.it/gaia-sins/freexl-sources/freexl-1.0.2.tar.gz
+##### Example: ReadOSM
+`wget http://www.gaia-gis.it/gaia-sins/readosm-1.0.0e.tar.gz
 
-tar -xvzf freexl-1.0.2.tar.gz 
+tar -xvzf readosm-1.0.0e.tar.gz 
 
-cd freexl-1.0.2/
+cd readosm-1.0.0e/
 
-./configure 
+./configure
 
-make -j8 
+make -j8
 
 sudo make install-strip`
 
