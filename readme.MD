@@ -77,4 +77,6 @@ The OSM node informations could not be called like they should. You get an addre
 
 Another bug is the jump to address function if you search for an address. I used Proj4 to get the right coordinates but somehow this works not like expecting.
 
+The Coordinates from clickevent seem to be right, if you transform coords from DB the lat-Value seems about faktor 10 to high, even lon-Value is not that right. It could be a transformation issue in the database for the entries from OSM.
+
 
