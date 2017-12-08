@@ -79,10 +79,14 @@ def get_address(address_name):
     print db_addresses [1][0]
 
 
-
-
-    #convert to string
-    return str(str(db_addresses [0][0]) +" is located at Postiton: " + str(db_addresses [0][1]) + "," + str(db_addresses [0][2]))
+    ##str(str(db_addresses [0][0]) +" is located at Postiton: " + str(db_addresses [0][1]) + "," + str(db_addresses [0][2]))
+    retrunVal = jsonify(
+            adress=db_addresses [0][0],
+            lat=db_addresses [0][1],
+            lon=db_addresses [0][2]
+        )
+    #return db entry
+    return retrunVal
 
 
 #before every request a connection to the db is set 
@@ -145,6 +149,15 @@ def locate_street():
     address_entry = get_address(address)
 
     return address_entry 
+
+# Errorhandling for invalid requests
+@app.errorhandler(500)
+def handle_bad_request(e):
+    return 'Could not get any db entry, try later'
+
+app.register_error_handler(500, lambda e: 'Could not get any entry to this location! - Sorry dude!')
+
+
 
 
 '''
