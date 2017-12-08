@@ -46,7 +46,7 @@ sudo make install-strip`
 The tools have some install scripts which you can use or you just download and install the packages via pip or something else. If the scripts should not work, the you can simple copy the cmd info and paste it into your cmd.
 
 #### Data
-Like I said, the used data for this geocoder example is ready to download at [Geofabrik](http://www.geofabrik.de). There I used the OSM database file for Bremen (bremen-latest.osm.pdf).
+Like I said, the used data for this geocoder example is ready to download at [Geofabrik](http://download.geofabrik.de/europe/germany.html). There I used the OSM database file for Bremen (bremen-latest.osm.pdf).
 
 To set up the SQLite database with the osm-raw information you just have to make this call in cmd
 `spatialite_osm_raw -o my_country.osm.pbf -d my_country.sqlite`
