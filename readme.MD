@@ -24,12 +24,18 @@ Description how to set up the project on own system.
 
 #### Install Frameworks
 
-For this project I used the frameworks listed above and with some skripts they'll install very easy just look [here](https://github.com/EnMaKa/my_spatial_service/tree/master/libs).
+For this project I used the frameworks listed above and with some skripts they'll install very easy just look [here](https://github.com/EnMaKa/my_spatial_service/tree/master/libs). 
+
+The tools have some install scripts which you can use or you just download and install the packages via pip or something else.
 
 #### Data
 Like I said, the used data for this geocoder example is ready to download at [Geofabrik](http://www.geofabrik.de). There I used the OSM database file for Bremen (bremen-latest.osm.pdf).
 
-For a reverse geocoder it is necessary to connect the node information with the adresses that belongs to the node.id with their geometry. Therefore I used some SQL-Statements that you will find in the same folder.
+To set up the SQLite database with the osm-raw information you just have to make this call in cmd
+`spatialite_osm_raw -o my_country.osm.pbf -d my_country.sqlite`
+
+
+For a reverse geocoder it is necessary to connect the node information with the adresses that belongs to the node.id with their geometry. Therefore I used some SQL-Statements that you will find in the uploaded SQLscript [here](https://github.com/EnMaKa/my_spatial_service/blob/master/sql_statements.sql). Just ran each step alone to set up the database.
 
 1. Create table with node.id, address and  then add geometry column
 2. Create another table with the merged node informations from other tabels
@@ -63,11 +69,12 @@ The second call will look at the informations that are given with a certain stre
 
 Example: http://127.0.0.1:5000/locatestreet?address=Brüggeweg
 
+The Flask-Backend will provide a simple JSON file with the first matching entry from the SQLite DB.
+
 
 #### Known Issues
-In this example there are some "bugs" that might be related to the database. 
-One known issue is that, if you click on the map and try to get the location you might not get the informatio that you thought you'll get. 
+The OSM node informations could not be called like they should. You get an address near to the lokation you've clicked, but not the right. There fore you could adjust the buffer radius at the mouseclick function in the map.js.
 
-The OSM node informations could not be called like they should. You get an address near to the lokation you've clicked, but not the right. 
+Another bug is the jump to address function if you search for an address. I used Proj4 to get the right coordinates but somehow this works not like expecting.
 
 
