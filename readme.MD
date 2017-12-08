@@ -71,6 +71,13 @@ Extesions used:
 - sqlite3 
 - sys
 
+##### run flask app
+After flask is installed you make a simple app setting to flask via cmd, that flask will know which python-file it should use.
+
+`FLASK_APP=flask_mygeo.py
+  
+flask run`
+
 #### Make an API-Call
 When the server runs, you can make two different calls to get informations from the database.
 
